@@ -14,6 +14,17 @@ app.post('/items', addItem);
 app.put('/items/:id', updateItem);
 app.delete('/items/:id', deleteItem);
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+app.get('/loop', async (req, res) => {
+  for (let i = 0; i < 3600; i++) {
+    console.info("i = " + i);
+    await sleep(i * 1000);
+  }
+});
+
 db.init().then(() => {
     app.listen(3000, () => console.log('Listening on port 3000'));
 }).catch((err) => {
